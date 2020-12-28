@@ -1,6 +1,6 @@
 ARG FIVEM_NUM=3184
 ARG FIVEM_VER=3184-6123f9196eb8cd2a987a1dd7ff7b36907a787962
-ARG DATA_VER=dd38bd01923a0595ecccef8026f1310304d7b0e3
+ARG DATA_VER=master
 
 FROM spritsail/alpine:3.12 as builder
 
@@ -42,6 +42,11 @@ LABEL maintainer="Spritsail <fivem@spritsail.io>" \
       io.spritsail.version.fivem_data=${DATA_VER}
 
 COPY --from=builder /output/ /
+
+# Setting the timezone so that it can be used with SimpleSync.
+RUN apk add tzdata
+RUN cp /usr/share/zoneinfo/America/New_York /etc/localtime
+RUN echo "America/New_York" >  /etc/timezone
 
 WORKDIR /config
 EXPOSE 30120
