@@ -1,8 +1,8 @@
-ARG FIVEM_NUM=3184
-ARG FIVEM_VER=3184-6123f9196eb8cd2a987a1dd7ff7b36907a787962
-ARG DATA_VER=master
+ARG FIVEM_NUM=3539
+ARG FIVEM_VER=3539-86d8fe5891dbdc38d43976e6a8afec97215530e8
+ARG DATA_VER=7680f316a7a128ca09d27101dac572098c111242
 
-FROM spritsail/alpine:3.12 as builder
+FROM spritsail/alpine:3.13 as builder
 
 ARG FIVEM_VER
 ARG DATA_VER
@@ -13,7 +13,7 @@ RUN wget -O- http://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/$
         | tar xJ --strip-components=1 \
             --exclude alpine/dev --exclude alpine/proc \
             --exclude alpine/run --exclude alpine/sys \
- && mkdir -p /output/opt/cfx-server-data \
+ && mkdir -p /output/opt/cfx-server-data /output/usr/local/share \
  && wget -O- http://github.com/citizenfx/cfx-server-data/archive/${DATA_VER}.tar.gz \
         | tar xz --strip-components=1 -C opt/cfx-server-data \
     \
